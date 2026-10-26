@@ -10,20 +10,20 @@ class TestCreateOrder:
 
     @allure.title('Создание заказа с разными цветами самоката')
     @pytest.mark.parametrize(
-        'color',
+        'color_data',
         [
-            ['BLACK'],
-            ['GREY'],
-            ['BLACK', 'GREY'],
-            None
+            {'color': ['BLACK']},
+            {'color': ['GREY']},
+            {'color': ['BLACK', 'GREY']},
+            {}
         ],
         ids=['black', 'grey', 'both_colors', 'without_color']
     )
-    def test_create_order_returns_201_and_track(self, api_session, color):
+    def test_create_order_returns_201_and_track(
+            self, api_session, color_data
+    ):
         order_data = ORDER_DATA.copy()
-
-        if color is not None:
-            order_data['color'] = color
+        order_data.update(color_data)
 
         response = api_session.post(
             ORDERS_URL,

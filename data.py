@@ -12,3 +12,8 @@ ORDER_DATA = {
     'deliveryDate': (date.today() + timedelta(days=3)).isoformat(),
     'comment': 'API automated test'
 }
+
+COURIER_ALREADY_EXISTS_MESSAGE = 'Этот логин уже используется. Попробуйте другой.'
+COURIER_MISSING_DATA_MESSAGE = 'Недостаточно данных для создания учетной записи'
+LOGIN_MISSING_DATA_MESSAGE = 'Недостаточно данных для входа'
+LOGIN_NOT_FOUND_MESSAGE = 'Учетная запись не найдена'

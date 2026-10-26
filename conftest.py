@@ -3,6 +3,7 @@ import requests
 
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+from helpers import generate_courier_data
 
 from urls import COURIER_URL, COURIER_LOGIN_URL
 
@@ -50,3 +51,18 @@ def courier_cleanup(api_session):
 
         assert delete_response.status_code == 200
         assert delete_response.json() == {'ok': True}
+
+@pytest.fixture
+def registered_courier(api_session, courier_cleanup):
+    courier_data = generate_courier_data()
+
+    response = api_session.post(
+        COURIER_URL,
+        json=courier_data,
+        timeout=(30, 30)
+    )
+
+    response.raise_for_status()
+    courier_cleanup.append(courier_data)
+
+    return courier_data
